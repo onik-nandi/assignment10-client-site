@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Navigate } from "react-router";
+import { Link } from "react-router";
 
 const Error = () => {
   return (
