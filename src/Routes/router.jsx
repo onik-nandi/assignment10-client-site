@@ -4,25 +4,38 @@ import Error from "../Pages/Error";
 import AuthLayout from "../Layout/AuthLayout";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
+import ArtWorks from "../Pages/ArtWorks";
+import AddArtWork from "../Pages/AddArtWork";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeLayout></HomeLayout>,
-  },
-  {
-    path:"/auth",
-    element:<AuthLayout></AuthLayout>,
-    children:[
+    children: [
       {
-        path:"/auth/login",
-        element:<Login></Login>
+        path: "/art-works",
+        element: <ArtWorks></ArtWorks>,
       },
       {
-        path:"/auth/register",
-        element:<Register></Register>
-      }
-    ]
+        path: "/add-art-works",
+        element:<AddArtWork></AddArtWork>,
+      },
+    ],
+  },
+
+  {
+    path: "/auth",
+    element: <AuthLayout></AuthLayout>,
+    children: [
+      {
+        path: "/auth/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/auth/register",
+        element: <Register></Register>,
+      },
+    ],
   },
   {
     path: "/*",
