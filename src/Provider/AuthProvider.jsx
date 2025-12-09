@@ -20,12 +20,19 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
 
-  // email password register
+  
 
-  const createUser = (email, password) => {
-    setLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password);
-  };
+   const createUser = async (email, password) => {
+     setLoading(true);
+   
+     const user = await createUserWithEmailAndPassword(
+       auth,
+       email,
+       password
+     );
+     await signOut(auth); 
+     return user;
+   };
 
   //   sign in auth
   const signIn = (email, password) => {
@@ -40,9 +47,7 @@ const AuthProvider = ({ children }) => {
   };
   // update user
 
-  const updateUser = (updatedData) => {
-    return updateProfile(auth.currentUser, updatedData);
-  };
+ 
 
   // Logout
   const logOut = () => {
@@ -67,12 +72,12 @@ const AuthProvider = ({ children }) => {
     signIn,
     logOut,
     signInGoogle,
-    updateUser,
+    
   };
-  // return <AuthContext value={authData}>{children}</AuthContext>;
+  
   return (
     <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>
-  ); // <-- CORRECT
+  ); 
 };
 
 export default AuthProvider;

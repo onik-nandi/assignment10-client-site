@@ -9,7 +9,7 @@ const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const getInitialTheme = () => {
-    console.log("Reading localStorage (Bad!)");
+    
     const storedTheme = localStorage.getItem("user-theme-preference");
     return storedTheme === "dark";
   };

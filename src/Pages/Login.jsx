@@ -1,17 +1,19 @@
 import React, { use, useState } from "react";
-import { Link, useNavigate } from "react-router";
+// import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
-import { useLocation } from "react-router";
+// import { useLocation } from "react-router";
 import { toast } from "react-toastify";
 import SignInWithGoogle from "../Components/SignInWithGoogle";
 import { RxEyeOpen } from "react-icons/rx";
 import { FaRegEyeSlash } from "react-icons/fa";
-
+import { Link, useNavigate, useLocation, NavLink } from "react-router-dom";
 const Login = () => {
   const { signIn, setUser, signInGoogle } = use(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+
+  console.log(`location:`, location.state);
 
   const handelLogin = (e) => {
     e.preventDefault();
@@ -23,7 +25,9 @@ const Login = () => {
         const user = res.user;
         // console.log(user)
         setUser(user);
-        navigate(`${location.state ? location.state : "/"}`);
+        const from = location.state?.from || "/";
+        navigate(from, { replace: true });
+
         toast.success(" Logged In Successfully!", {
           position: "top-right",
           autoClose: 1000,
@@ -81,7 +85,8 @@ const Login = () => {
                   " w-full text-[20px] border-secondary border-2 p-1 focus:outline-none"
                 }
               />
-              <Link
+              <button
+                type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="cursor-pointer absolute top-3.5 right-4 z-50"
               >
@@ -90,16 +95,9 @@ const Login = () => {
                 ) : (
                   <FaRegEyeSlash size={19} />
                 )}
-              </Link>
+              </button>
             </div>
-            {/* <div>
-              <Link
-                to="/auth/forget-password"
-                className="link link-hover text-[16px] font-bold"
-              >
-                Forgot password?
-              </Link>
-            </div> */}
+           
             <button type="submit" className="btn btn-secondary mt-4">
               Login
             </button>

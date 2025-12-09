@@ -19,16 +19,19 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home></Home>,
-      
       },
-      ,
+
       {
         path: "/art-works",
         element: <ArtWorks></ArtWorks>,
       },
       {
         path: "/add-art-works",
-        element: <AddArtWork></AddArtWork>,
+        element: (
+          <PrivateRoute>
+            <AddArtWork></AddArtWork>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/my-gallery",

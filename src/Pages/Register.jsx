@@ -1,14 +1,16 @@
 import React, { use, useState } from "react";
-import { Link, Navigate } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import SignInWithGoogle from "../Components/SignInWithGoogle";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { RxEyeOpen } from "react-icons/rx";
+import { signOut } from "firebase/auth";
 
 const Register = () => {
   const { createUser, updateUser, setUser } = use(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
   const handelRegister = (e) => {
     e.preventDefault();
@@ -27,15 +29,9 @@ const Register = () => {
     createUser(email, password)
       .then((res) => {
         const user = res.user;
-        // console.log(user)
-        updateUser({ displayName: name, photoURL: photo })
-          .then(() =>
-            // setUser({displayName: name , photoURL: photo})
-            console.log(user)
-          )
-          .then((error) => {
-            console.log(error.message);
-          });
+
+        console.log(user);
+
         toast.success("Successfully Registered", {
           position: "top-right",
           autoClose: 1000,
@@ -47,6 +43,8 @@ const Register = () => {
           theme: "light",
         });
         form.reset();
+
+        navigate("/auth/login");
       })
       .catch((err) => {
         console.log(err.message);
