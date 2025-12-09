@@ -31,10 +31,7 @@ const Register = () => {
         const user = res.user;
         // console.log(user)
         updateUser({ displayName: name, photoURL: photo })
-          .then(() =>
-            // setUser({displayName: name , photoURL: photo})
-            console.log(user)
-          )
+          .then(() => console.log(user))
           .then((error) => {
             console.log(error.message);
           });
