@@ -8,7 +8,7 @@ import { RxEyeOpen } from "react-icons/rx";
 import { signOut } from "firebase/auth";
 
 const Register = () => {
-  const { createUser, updateUser, setUser } = use(AuthContext);
+  const { createUser, updateUser, setUser, auth } = use(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
@@ -29,9 +29,15 @@ const Register = () => {
     createUser(email, password)
       .then((res) => {
         const user = res.user;
-
-        console.log(user);
-
+        // console.log(user)
+        updateUser({ displayName: name, photoURL: photo })
+          .then(() =>
+            // setUser({displayName: name , photoURL: photo})
+            console.log(user)
+          )
+          .then((error) => {
+            console.log(error.message);
+          });
         toast.success("Successfully Registered", {
           position: "top-right",
           autoClose: 1000,
@@ -43,7 +49,7 @@ const Register = () => {
           theme: "light",
         });
         form.reset();
-
+        signOut(auth);
         navigate("/auth/login");
       })
       .catch((err) => {

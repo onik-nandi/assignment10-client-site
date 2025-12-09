@@ -30,7 +30,7 @@ const AuthProvider = ({ children }) => {
        email,
        password
      );
-     await signOut(auth); 
+     
      return user;
    };
 
@@ -47,7 +47,9 @@ const AuthProvider = ({ children }) => {
   };
   // update user
 
- 
+ const updateUser = (updatedData) => {
+   return updateProfile(auth.currentUser, updatedData);
+ };
 
   // Logout
   const logOut = () => {
@@ -72,7 +74,8 @@ const AuthProvider = ({ children }) => {
     signIn,
     logOut,
     signInGoogle,
-    
+    updateUser,
+    auth
   };
   
   return (
