@@ -2,7 +2,7 @@ import React from "react";
 
 
 
-export const topArtists = [
+const topArtists = [
   {
     id: 1,
     name: "Anika Rahman",
