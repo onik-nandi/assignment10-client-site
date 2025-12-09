@@ -76,8 +76,8 @@ const NavBar = () => {
               {user && (
                 <>
                   <MyLink to="/add-art-works">Add Artwork</MyLink>
-                  <MyLink to="/my-services"> My Gallery</MyLink>
-                  <MyLink to="/my-orders">My Favorites</MyLink>
+                  <MyLink to="/my-gallery"> My Gallery</MyLink>
+                  <MyLink to="/my-favourites">My Favorites</MyLink>
                 </>
               )}
             </ul>
@@ -94,8 +94,8 @@ const NavBar = () => {
             {user && (
               <>
                 <MyLink to="/add-art-works">Add Artwork</MyLink>
-                <MyLink to="/my-services"> My Gallery</MyLink>
-                <MyLink to="/my-orders">My Favorites</MyLink>
+                <MyLink to="/my-gallery"> My Gallery</MyLink>
+                <MyLink to="/my-favourites">My Favorites</MyLink>
               </>
             )}
           </ul>

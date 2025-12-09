@@ -6,6 +6,10 @@ import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import ArtWorks from "../Pages/ArtWorks";
 import AddArtWork from "../Pages/AddArtWork";
+import PrivateRoute from "../Provider/PrivateRoute";
+import MyGallery from "../Pages/MyGallery";
+import MyFavourites from "../Pages/MyFavourites";
+import Home from "../Components/Home";
 
 const router = createBrowserRouter([
   {
@@ -13,12 +17,34 @@ const router = createBrowserRouter([
     element: <HomeLayout></HomeLayout>,
     children: [
       {
+        index: true,
+        element: <Home></Home>,
+      
+      },
+      ,
+      {
         path: "/art-works",
         element: <ArtWorks></ArtWorks>,
       },
       {
         path: "/add-art-works",
-        element:<AddArtWork></AddArtWork>,
+        element: <AddArtWork></AddArtWork>,
+      },
+      {
+        path: "/my-gallery",
+        element: (
+          <PrivateRoute>
+            <MyGallery></MyGallery>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/my-favourites",
+        element: (
+          <PrivateRoute>
+            <MyFavourites></MyFavourites>
+          </PrivateRoute>
+        ),
       },
     ],
   },
