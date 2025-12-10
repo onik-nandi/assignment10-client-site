@@ -3,14 +3,17 @@ import { BiHeart } from "react-icons/bi";
 
 const ArtWorks = () => {
   const [artWorks, setArtWorks] = useState([]);
+  const [category, setCategory] = useState("");
   useEffect(() => {
-    fetch(`http://localhost:3000/artworks?visibility=Public`)
+    fetch(
+      `http://localhost:3000/artworks?visibility=Public&category=${category}`
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
         setArtWorks(data);
       });
-  }, []);
+  }, [category]);
 
   const formatRelativeDate = (dateStr) => {
     if (!dateStr) return "";
@@ -41,6 +44,18 @@ const ArtWorks = () => {
       <h2 className="text-3xl font-bold text-center mb-8">
         <span className="text-secondary">All</span> ArtWorks{" "}
       </h2>
+      <select
+        onChange={(e) => setCategory(e.target.value)}
+        defaultValue="Select Category"
+        className="select mb-4"
+      >
+        <option disabled={true}>Select Category</option>
+        <option value="">All</option>
+        <option value="Paintings">Paintings</option>
+        <option value="Illustration">Illustration</option>
+        <option value="Digital Art">Digital Art</option>
+        <option value="Conceptual Art">Conceptual Art</option>
+      </select>
 
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {artWorks.map((art) => (
@@ -90,16 +105,13 @@ const ArtWorks = () => {
 
               <div className="mt-4 flex items-center justify-between">
                 <button
-                  
                   className="inline-flex items-center justify-center px-4 py-2 rounded-xl border border-transparent bg-zinc-900 text-white text-sm font-medium hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-zinc-300"
                   aria-label={`View details for ${art.title}`}
                 >
                   View Details
                 </button>
 
-                <time
-                  className="text-xs"
-                >
+                <time className="text-xs">
                   {formatRelativeDate(art.createdAt)} Ago
                 </time>
               </div>
