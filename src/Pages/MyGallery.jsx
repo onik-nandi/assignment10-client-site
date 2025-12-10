@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { Link } from "react-router";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const MyGallery = () => {
   const [myArts, setMyArts] = useState([]);
@@ -14,6 +16,38 @@ const MyGallery = () => {
           .catch((err) => console.log(err))
     );
   }, [user?.email]);
+
+  const handelDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`http://localhost:3000/delete/${id}`)
+          .then((res) => {
+            console.log(res.data);
+            if (res.data.deletedCount == 1) {
+              const filterData = myArts.filter((service) => service._id != id);
+              setMyArts(filterData);
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+  };
 
   return (
     <div className="overflow-x-auto w-11/12 mx-auto">
@@ -53,7 +87,12 @@ const MyGallery = () => {
               </td>
               <td className="hidden md:table-cell">{art?.category}</td>
               <td className="gap-2">
-                <button className="btn btn-error btn-xs mr-2">Delete</button>
+                <button
+                  className="btn btn-error btn-xs mr-2"
+                  onClick={() => handelDelete(art?._id)}
+                >
+                  Delete
+                </button>
                 <Link to={`/update-art/${art?._id}`}>
                   <button className="btn btn-primary btn-xs ml-2 mt-2 md:mt-0">
                     Edit
