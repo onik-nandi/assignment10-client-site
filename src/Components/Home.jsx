@@ -5,6 +5,7 @@ import Highlights from "./Highlights";
 import axios from "axios";
 import { BiHeart } from "react-icons/bi";
 import { Link } from "react-router";
+import { Fade } from "react-awesome-reveal";
 
 const Home = () => {
   const [recentArtworks, setRecentArtWorks] = useState([]);
@@ -37,6 +38,20 @@ const Home = () => {
 
     return then.toLocaleDateString();
   };
+
+  const handleLike = async (id) => {
+    try {
+      await axios.put(`http://localhost:3000/artWorks/${id}/like`);
+      setRecentArtWorks((prev) =>
+        prev.map((art) =>
+          art._id === id ? { ...art, likes: (art.likes || 0) + 1 } : art
+        )
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div>
       <Hero></Hero>
@@ -66,7 +81,9 @@ const Home = () => {
                 className="text-lg font-medium truncate"
                 title={art?.title}
               >
-                {art?.title}
+                <Fade delay={1e1} cascade damping={1e-1}>
+                  {art?.title}
+                </Fade>
               </h3>
 
               <p
@@ -84,12 +101,19 @@ const Home = () => {
                 </span>
 
                 <div className="inline-flex items-center ">
-                  <BiHeart className="w-8 h-8 mr-1" />
-                  <span>{typeof art?.likes === "number" ? art?.likes : 0}</span>
+                  <button
+                    onClick={() => handleLike(art._id)}
+                    className="inline-flex items-center hover:text-red-500"
+                  >
+                    <BiHeart className="w-8 h-8 mr-1 cursor-pointer" />
+                    <span>{art.likes || 0}</span>
+                  </button>
                 </div>
               </div>
               <div className="mt-3 flex items-center justify-between">
-                <p>{art?.description}</p>
+                <p>
+                  <Fade>{art?.description}</Fade>
+                </p>
               </div>
 
               <div className="mt-4 flex items-center justify-between">

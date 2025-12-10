@@ -1,11 +1,12 @@
-import React, { use, useEffect, useState } from "react";
+import React, {  useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import MyLink from "./MyLink";
 import { NavLink, Link } from "react-router";
 import { toast } from "react-toastify";
 
+
 const NavBar = () => {
-  const { user, logOut, setUser } = use(AuthContext);
+  const { user, logOut, setUser } = useContext(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const getInitialTheme = () => {

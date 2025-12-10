@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Fade } from "react-awesome-reveal";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 
@@ -105,10 +106,16 @@ const MyFavourites = () => {
             alt="No Data"
             className="w-40 opacity-80"
           />
-          <h2 className="text-xl font-semibold mt-6">No Data Found</h2>
+          <h2 className="text-xl font-semibold mt-6">
+            <Fade delay={1} cascade damping={1e-1}>
+              No Data Found
+            </Fade>{" "}
+          </h2>
           <p className=" mt-2 max-w-sm">
-            Your page is feeling a little empty. Add something to make it
-            useful.
+            <Fade delay={1e3} cascade damping={1e-1}>
+              Your page is feeling a little empty. Add something to make it
+              useful.
+            </Fade>
           </p>
         </div>
       )}
