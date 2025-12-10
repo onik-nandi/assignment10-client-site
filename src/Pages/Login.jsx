@@ -8,12 +8,12 @@ import { RxEyeOpen } from "react-icons/rx";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { Link, useNavigate, useLocation, NavLink } from "react-router-dom";
 const Login = () => {
-  const { signIn, setUser, signInGoogle } = use(AuthContext);
+  const { signIn, setUser,  } = use(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
-  console.log(`location:`, location.state);
+  // console.log(`location:`, location.state);
 
   const handelLogin = (e) => {
     e.preventDefault();

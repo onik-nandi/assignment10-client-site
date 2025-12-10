@@ -10,9 +10,11 @@ const UpdateArt = () => {
   const [art, setArt] = useState();
   const navigate = useNavigate();
   useEffect(() => {
-    axios.get(`http://localhost:3000/artWorks/${id}`).then((res) => {
-      setArt(res.data);
-    });
+    axios
+      .get(`https://assignment10-backend-tau.vercel.app/artWorks/${id}`)
+      .then((res) => {
+        setArt(res.data);
+      });
   }, [id]);
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -45,7 +47,7 @@ const UpdateArt = () => {
     };
     console.log(formData);
     axios
-      .put(`http://localhost:3000/update/${id}`, formData)
+      .put(`https://assignment10-backend-tau.vercel.app/update/${id}`, formData)
       .then((res) => {
         console.log(res.data);
         Swal.fire({

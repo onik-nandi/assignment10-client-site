@@ -3,20 +3,26 @@ import React, { useEffect, useState } from "react";
 import { Fade } from "react-awesome-reveal";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
+import Loader from "./Loader";
 
 const MyFavourites = () => {
   const [myFavs, setMyFavs] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
+     setLoading(true);
     axios
-      .get(`http://localhost:3000/favourites`)
+      .get(`https://assignment10-backend-tau.vercel.app/favourites`)
       .then((res) => {
         setMyFavs(res.data);
+        setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
-
+ if (loading) {
+   return <Loader></Loader>;
+ }
   const handelUnfavourite = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -29,9 +35,11 @@ const MyFavourites = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:3000/delete-favourite/${id}`)
+          .delete(
+            `https://assignment10-backend-tau.vercel.app/delete-favourite/${id}`
+          )
           .then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             if (res.data.deletedCount == 1) {
               const filterData = myFavs.filter((myFav) => myFav._id != id);
               setMyFavs(filterData);
@@ -43,7 +51,7 @@ const MyFavourites = () => {
             }
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       }
     });
@@ -113,8 +121,7 @@ const MyFavourites = () => {
           </h2>
           <p className=" mt-2 max-w-sm">
             <Fade delay={1e3} cascade damping={1e-1}>
-              Your page is feeling a little empty. Add something to make it
-              useful.
+              Add something to make it useful.
             </Fade>
           </p>
         </div>

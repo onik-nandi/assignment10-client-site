@@ -34,10 +34,11 @@ const AddArtWork = () => {
       userName,
       email,
     };
-    console.log(formData);
-    axios.post("http://localhost:3000/artworks", formData)
+    // console.log(formData);
+    axios
+      .post("https://assignment10-backend-tau.vercel.app/artworks", formData)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
 
         if (res.data.acknowledged) {
           Swal.fire({
@@ -51,15 +52,13 @@ const AddArtWork = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         Swal.fire({
           icon: "error",
           title: "Oops...",
           text: "Something went wrong!",
         });
       });
-
-
   };
   return (
     <div>
@@ -146,7 +145,7 @@ const AddArtWork = () => {
           <input
             rows="3"
             className="w-full border rounded px-3 py-2 focus:border-blue-500 outline-none"
-            placeholder="Short description"
+            placeholder="Size/Dimensions"
             name="dimensions"
           ></input>
         </div>

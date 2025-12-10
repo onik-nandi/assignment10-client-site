@@ -1,20 +1,28 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Fade } from "react-awesome-reveal";
 import { BiHeart } from "react-icons/bi";
 import { Link } from "react-router";
+import { AuthContext } from "../Provider/AuthProvider";
+import Loader from "./Loader";
 
 const ArtWorks = () => {
   const [artWorks, setArtWorks] = useState([]);
   const [category, setCategory] = useState("");
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  const { user } = useContext(AuthContext);
   useEffect(() => {
+    setLoading(true);
     fetch(
-      `http://localhost:3000/artworks?visibility=Public&category=${category}`
+      `https://assignment10-backend-tau.vercel.app/artworks?visibility=Public&category=${category}`
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setArtWorks(data);
+        setLoading(false);
       });
   }, [category]);
 
@@ -41,20 +49,29 @@ const ArtWorks = () => {
 
     return then.toLocaleDateString();
   };
+  const filteredArtWorks = artWorks.filter((art) =>
+    `${art.title} ${art.artistName}`
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
 
   const handleLike = async (id) => {
     try {
-      await axios.put(`http://localhost:3000/artWorks/${id}/like`);
+      await axios.put(
+        `https://assignment10-backend-tau.vercel.app/artWorks/${id}/like`
+      );
       setArtWorks((prev) =>
         prev.map((art) =>
           art._id === id ? { ...art, likes: (art.likes || 0) + 1 } : art
         )
       );
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
-
+  if (loading) {
+    return <Loader></Loader>;
+  }
   return (
     <div>
       <div>
@@ -62,7 +79,7 @@ const ArtWorks = () => {
           <span className="text-secondary">All</span> ArtWorks{" "}
         </h2>
       </div>
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row md:justify-between">
         <select
           onChange={(e) => setCategory(e.target.value)}
           defaultValue="Select Category"
@@ -75,13 +92,19 @@ const ArtWorks = () => {
           <option value="Digital Art">Digital Art</option>
           <option value="Conceptual Art">Conceptual Art</option>
         </select>
+        <input
+          type="text"
+          placeholder="Search by title or artist"
+          className="input input-bordered"
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </div>
       <section className=" mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
-          {artWorks.map((art) => (
+          {filteredArtWorks.map((art) => (
             <div
               key={art?._id}
-              className=" rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-200 md:max-w-[400px]"
+              className=" rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-200 md:max-w-[400px] md:min-h-[450px]"
             >
               <div className="h-100 w-full object-cover ">
                 <img
@@ -129,8 +152,20 @@ const ArtWorks = () => {
                     </button>
                   </div>
                 </div>
-                <div className="mt-3 flex items-center justify-between">
-                  <p>{art?.description}</p>
+                <div className="mt-3 flex  justify-between md:h-[60px] ">
+                  <p>
+                    <Fade>
+                      {art?.description?.length > 120
+                        ? art.description.slice(0, 120) + "..."
+                        : art?.description}
+                    </Fade>
+                  </p>
+                </div>
+                <div className="mt-3 flex items-center justify-between ">
+                  <p>
+                    <span className="font-extralight ">Uploaded By:</span>{" "}
+                    {art?.userName}
+                  </p>
                 </div>
                 <div className="mt-4 flex items-center justify-between">
                   <Link
@@ -163,8 +198,7 @@ const ArtWorks = () => {
             </h2>
             <p className=" mt-2 max-w-sm">
               <Fade delay={1e3} cascade damping={1e-1}>
-                Your page is feeling a little empty. Add something to make it
-                useful.
+                Add something to make it useful.
               </Fade>
             </p>
           </div>

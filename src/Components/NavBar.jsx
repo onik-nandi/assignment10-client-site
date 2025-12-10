@@ -42,7 +42,7 @@ const NavBar = () => {
         setIsMenuOpen(false);
       })
       .catch((error) => {
-        console.log(error.message);
+        // console.log(error.message);
       });
   };
   return (

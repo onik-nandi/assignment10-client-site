@@ -28,7 +28,7 @@ const Hero = () => {
     },
   ];
   return (
-    <div className="w-full h-[95vh]  mx-auto py-5">
+    <div className="w-full md:h-[95vh]  mx-auto py-5">
       <ImageGallery
         items={images}
         autoPlay={true}
@@ -39,7 +39,7 @@ const Hero = () => {
           <img
             src={item.original}
             alt=""
-            className="w-full h-[85vh] object-cover"
+            className="w-full md:h-[85vh] object-cover"
           />
         )}
       />

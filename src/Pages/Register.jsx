@@ -11,7 +11,8 @@ const Register = () => {
   const { createUser, updateUser, setUser, auth } = use(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
   const handelRegister = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -21,7 +22,7 @@ const Register = () => {
     const password = form.password.value;
     if (!passwordRegex.test(password)) {
       toast.error(
-        "Need Atleast 6 Charecters With UpperCase & LowerCase Letter"
+        "Need Atleast 6 Charecters With UpperCase & LowerCase Letter & Special "
       );
       return;
     }

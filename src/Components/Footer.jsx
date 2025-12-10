@@ -14,9 +14,9 @@ const Footer = () => {
             <span className="text-secondary">Art</span>Nest
           </Link>
           <p>
-            GreenNest is an elegant single-page web application <br /> built for
-            plant lovers who want to nurture and decorate <br /> their homes
-            with healthy indoor plants.
+            A modern art showcase that brings together painters,<br /> illustrators
+            and digital creators. Browse collections, learn <br />about artists, and
+            experience visual stories crafted with passion.
           </p>
         </aside>
         <nav>

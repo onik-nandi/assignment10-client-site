@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Hero from "./Hero";
 import TopArtists from "./TopArtists";
 import Highlights from "./Highlights";
@@ -6,14 +6,21 @@ import axios from "axios";
 import { BiHeart } from "react-icons/bi";
 import { Link } from "react-router";
 import { Fade } from "react-awesome-reveal";
+import { AuthContext } from "../Provider/AuthProvider";
+import Loader from "../Pages/Loader";
 
 const Home = () => {
   const [recentArtworks, setRecentArtWorks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/recentArtworks`).then((res) => {
-      setRecentArtWorks(res.data);
-    });
+    setLoading(true);
+    axios
+      .get(`https://assignment10-backend-tau.vercel.app/recentArtworks`)
+      .then((res) => {
+        setRecentArtWorks(res.data);
+        setLoading(false);
+      });
   }, []);
   const formatRelativeDate = (dateStr) => {
     if (!dateStr) return "";
@@ -38,17 +45,21 @@ const Home = () => {
 
     return then.toLocaleDateString();
   };
-
+  if (loading) {
+    return <Loader></Loader>;
+  }
   const handleLike = async (id) => {
     try {
-      await axios.put(`http://localhost:3000/artWorks/${id}/like`);
+      await axios.put(
+        `https://assignment10-backend-tau.vercel.app/artWorks/${id}/like`
+      );
       setRecentArtWorks((prev) =>
         prev.map((art) =>
           art._id === id ? { ...art, likes: (art.likes || 0) + 1 } : art
         )
       );
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -62,7 +73,7 @@ const Home = () => {
         {recentArtworks.map((art) => (
           <div
             key={art?._id}
-            className=" rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-200 md:max-w-[400px] mx-4 "
+            className=" rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-200 md:max-w-[400px] md:min-h-[450px] mx-4 "
           >
             <div className="h-100 w-full object-cover ">
               <img
@@ -110,9 +121,19 @@ const Home = () => {
                   </button>
                 </div>
               </div>
-              <div className="mt-3 flex items-center justify-between">
+              <div className="mt-3 flex items-center justify-between md:h-[60px]">
                 <p>
-                  <Fade>{art?.description}</Fade>
+                  <Fade>
+                    {art?.description?.length > 120
+                      ? art.description.slice(0, 120) + "..."
+                      : art?.description}
+                  </Fade>
+                </p>
+              </div>
+              <div className="mt-3 flex items-center justify-between ">
+                <p>
+                  <span className="font-extralight ">Uploaded By:</span>{" "}
+                  {art?.userName}
                 </p>
               </div>
 
@@ -134,9 +155,23 @@ const Home = () => {
         ))}
 
         {recentArtworks.length === 0 && (
-          <p className="text-sm text-zinc-600 col-span-full">
-            No recent artworks to display.
-          </p>
+          <div className="flex flex-col items-center justify-center text-center py-20">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png"
+              alt="No Data"
+              className="w-40 opacity-80"
+            />
+            <h2 className="text-xl font-semibold mt-6">
+              <Fade delay={1} cascade damping={1e-1}>
+                No Data Found
+              </Fade>{" "}
+            </h2>
+            <p className=" mt-2 max-w-sm">
+              <Fade delay={1e3} cascade damping={1e-1}>
+                Add something to make it useful.
+              </Fade>
+            </p>
+          </div>
         )}
       </div>
 

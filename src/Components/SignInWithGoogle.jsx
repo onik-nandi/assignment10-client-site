@@ -13,8 +13,8 @@ const SignInWithGoogle = () => {
     signInGoogle()
       .then((res) => {
         const user = res.user;
-        console.log(user)
-        // setUser(user);
+        // console.log(user)
+        setUser(user);
         const from = location.state?.from || "/";
         navigate(from, { replace: true });
         toast.success(" Logged In Successfully!", {

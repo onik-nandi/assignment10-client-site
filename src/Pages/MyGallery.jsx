@@ -4,19 +4,28 @@ import { Link } from "react-router";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { Fade } from "react-awesome-reveal";
+import Loader from "./Loader";
 const MyGallery = () => {
   const [myArts, setMyArts] = useState([]);
   const { user } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetch(`http://localhost:3000/my-artworks?email=${user?.email}`).then(
-      (res) =>
-        res
-          .json()
-          .then((data) => setMyArts(data))
-          .catch((err) => console.log(err))
+    setLoading(true);
+    fetch(
+      `https://assignment10-backend-tau.vercel.app/my-artworks?email=${user?.email}`
+    ).then((res) =>
+      res
+        .json()
+        .then((data) => {
+          setMyArts(data);
+          setLoading(false);
+        })
+        // .catch((err) => console.log(err))
     );
   }, [user?.email]);
-
+if (loading) {
+  return <Loader></Loader>;
+}
   const handelDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -29,9 +38,9 @@ const MyGallery = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:3000/delete/${id}`)
+          .delete(`https://assignment10-backend-tau.vercel.app/delete/${id}`)
           .then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             if (res.data.deletedCount == 1) {
               const filterData = myArts.filter((service) => service._id != id);
               setMyArts(filterData);
@@ -43,7 +52,7 @@ const MyGallery = () => {
             }
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       }
     });
@@ -113,14 +122,13 @@ const MyGallery = () => {
             className="w-40 opacity-80"
           />
           <h2 className="text-xl font-semibold mt-6">
-            <Fade delay={1e0} cascade damping={1e-1}>
+            <Fade delay={1} cascade damping={1e-1}>
               No Data Found
             </Fade>{" "}
           </h2>
           <p className=" mt-2 max-w-sm">
             <Fade delay={1e3} cascade damping={1e-1}>
-              Your page is feeling a little empty. Add something to make it
-              useful.
+              Add something to make it useful.
             </Fade>
           </p>
         </div>

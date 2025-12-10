@@ -6,36 +6,46 @@ import Swal from "sweetalert2";
 
 const ArtDetails = () => {
   const [artwork, setArtWork] = useState([]);
+  const [isFavourite, setIsFavourite] = useState(false);
   const { id } = useParams();
-  const { user } = useContext(AuthContext);
+
   useEffect(() => {
-    fetch(`http://localhost:3000/artWorks/${id}`)
+    fetch(`https://assignment10-backend-tau.vercel.app/artWorks/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setArtWork(data);
-        console.log(data);
+        // console.log(data);
+        if (data?.isFavourite) {
+          setIsFavourite(true);
+        }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [id]);
 
   const handelFavourite = () => {
     axios
-      .post(`http://localhost:3000/favourites`, artwork)
+      .post(`https://assignment10-backend-tau.vercel.app/favourites`, artwork)
       .then((res) => {
-        console.log(res);
-        const acknowledged = res.data.acknowledged;
+        const { acknowledged } = res.data;
+
         if (acknowledged) {
           Swal.fire({
             title: "Added To Favourite List",
             icon: "success",
             draggable: true,
           });
+          setIsFavourite(true);
         }
       })
       .catch((err) => {
         console.log(err);
+        Swal.fire({
+          title: "Already In Favourite List",
+          icon: "info",
+          draggable: true,
+        });
       });
   };
 
@@ -79,8 +89,12 @@ const ArtDetails = () => {
             </p>
           </div>
 
-          <button onClick={handelFavourite} className="btn btn-primary mt-3">
-            Make Favourite
+          <button
+            onClick={handelFavourite}
+            className="btn btn-primary mt-3"
+            disabled={isFavourite}
+          >
+            {isFavourite ? "Already Favourite" : "Make Favourite"}
           </button>
         </div>
       </div>
