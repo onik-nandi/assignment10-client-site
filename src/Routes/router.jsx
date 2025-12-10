@@ -10,6 +10,7 @@ import PrivateRoute from "../Provider/PrivateRoute";
 import MyGallery from "../Pages/MyGallery";
 import MyFavourites from "../Pages/MyFavourites";
 import Home from "../Components/Home";
+import UpdateArt from "../Pages/UpdateArt";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyFavourites></MyFavourites>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/update-art",
+        element: (
+          <PrivateRoute>
+            <UpdateArt></UpdateArt>
           </PrivateRoute>
         ),
       },

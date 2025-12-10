@@ -42,11 +42,11 @@ const Home = () => {
       <h2 className="text-3xl font-bold text-center mt-8">
         <span className="text-secondary">Recent</span> ArtWorks{" "}
       </h2>
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-8">
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 mt-8 md:max-w-9/12 mx-auto ">
         {recentArtworks.map((art) => (
           <div
             key={art?._id}
-            className=" rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-200"
+            className=" rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-200 md:max-w-[400px] mx-4 "
           >
             <div className="h-100 w-full object-cover ">
               <img
@@ -83,9 +83,12 @@ const Home = () => {
                 </span>
 
                 <div className="inline-flex items-center ">
-                  <BiHeart className="w-4 h-4 mr-1" />
+                  <BiHeart className="w-8 h-8 mr-1" />
                   <span>{typeof art?.likes === "number" ? art?.likes : 0}</span>
                 </div>
+              </div>
+              <div className="mt-3 flex items-center justify-between">
+                <p>{art?.description}</p>
               </div>
 
               <div className="mt-4 flex items-center justify-between">

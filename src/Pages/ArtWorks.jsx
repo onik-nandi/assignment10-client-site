@@ -61,7 +61,7 @@ const ArtWorks = () => {
         {artWorks.map((art) => (
           <div
             key={art?._id}
-            className=" rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-200"
+            className=" rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-200 md:max-w-[400px]"
           >
             <div className="h-100 w-full object-cover ">
               <img
@@ -98,11 +98,13 @@ const ArtWorks = () => {
                 </span>
 
                 <div className="inline-flex items-center ">
-                  <BiHeart className="w-4 h-4 mr-1" />
+                  <BiHeart className="w-8 h-8 mr-1" />
                   <span>{typeof art?.likes === "number" ? art?.likes : 0}</span>
                 </div>
               </div>
-
+              <div className="mt-3 flex items-center justify-between">
+                <p>{art?.description}</p>
+              </div>
               <div className="mt-4 flex items-center justify-between">
                 <button
                   className="inline-flex items-center justify-center px-4 py-2 rounded-xl border border-transparent bg-zinc-900 text-white text-sm font-medium hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-zinc-300"
