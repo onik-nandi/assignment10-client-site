@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BiHeart } from "react-icons/bi";
+import { Link } from "react-router";
 
 const ArtWorks = () => {
   const [artWorks, setArtWorks] = useState([]);
@@ -106,12 +107,13 @@ const ArtWorks = () => {
                 <p>{art?.description}</p>
               </div>
               <div className="mt-4 flex items-center justify-between">
-                <button
+                <Link
                   className="inline-flex items-center justify-center px-4 py-2 rounded-xl border border-transparent bg-zinc-900 text-white text-sm font-medium hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-zinc-300"
                   aria-label={`View details for ${art?.title}`}
+                  to={`/artWorks/${art?._id}`}
                 >
                   View Details
-                </button>
+                </Link>
 
                 <time className="text-xs">
                   {formatRelativeDate(art?.createdAt)} Ago

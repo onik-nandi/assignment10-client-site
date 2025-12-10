@@ -4,6 +4,7 @@ import TopArtists from "./TopArtists";
 import Highlights from "./Highlights";
 import axios from "axios";
 import { BiHeart } from "react-icons/bi";
+import { Link } from "react-router";
 
 const Home = () => {
   const [recentArtworks, setRecentArtWorks] = useState([]);
@@ -92,12 +93,13 @@ const Home = () => {
               </div>
 
               <div className="mt-4 flex items-center justify-between">
-                <button
-                  className="inline-flex items-center justify-center px-4 py-2 rounded-xl border border-transparent bg-zinc-900 text-white text-sm font-medium hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-zinc-300"
+                <Link
+                  className="inline-flex items-center justify-center px-4 py-2 rounded-xl border border-transparent bg-zinc-900 text-white text-sm font-medium hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-zinc-300 hover:cursor-pointer "
                   aria-label={`View details for ${art?.title}`}
+                  to={`/artWorks/${art?._id}`}
                 >
                   View Details
-                </button>
+                </Link>
 
                 <time className="text-xs">
                   {formatRelativeDate(art?.createdAt)} Ago

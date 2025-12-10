@@ -11,6 +11,7 @@ import MyGallery from "../Pages/MyGallery";
 import MyFavourites from "../Pages/MyFavourites";
 import Home from "../Components/Home";
 import UpdateArt from "../Pages/UpdateArt";
+import ArtDetails from "../Pages/ArtDetails";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AddArtWork></AddArtWork>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/artWorks/:id",
+        element: (
+          <PrivateRoute>
+            <ArtDetails></ArtDetails>
           </PrivateRoute>
         ),
       },
