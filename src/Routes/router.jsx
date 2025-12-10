@@ -51,7 +51,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/update-art",
+        path: "/update-art/:id",
         element: (
           <PrivateRoute>
             <UpdateArt></UpdateArt>

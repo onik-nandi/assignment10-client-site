@@ -143,12 +143,12 @@ const AddArtWork = () => {
         {/* Description */}
         <div>
           <label className="block text-sm">Dimensions</label>
-          <textarea
+          <input
             rows="3"
             className="w-full border rounded px-3 py-2 focus:border-blue-500 outline-none"
             placeholder="Short description"
             name="dimensions"
-          ></textarea>
+          ></input>
         </div>
 
         {/* Image URL */}
