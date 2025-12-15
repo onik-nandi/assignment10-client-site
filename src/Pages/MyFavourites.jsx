@@ -1,28 +1,39 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Fade } from "react-awesome-reveal";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 import Loader from "./Loader";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const MyFavourites = () => {
   const [myFavs, setMyFavs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { user } = useContext(AuthContext);
+  console.log(user?.email);
+
   useEffect(() => {
-     setLoading(true);
+    if (!user?.email) return;
+
+    setLoading(true);
+
     axios
-      .get(`https://assignment10-backend-tau.vercel.app/favourites`)
+      .get(
+        `https://assignment10-backend-tau.vercel.app/my-favourites?userEmail=${user.email}`
+      )
       .then((res) => {
         setMyFavs(res.data);
         setLoading(false);
       })
-      .catch((err) => {
-        // console.log(err);
+      .catch(() => {
+        setMyFavs([]);
+        setLoading(false);
       });
-  }, []);
- if (loading) {
-   return <Loader></Loader>;
- }
+  }, [user?.email]);
+
+  if (loading) {
+    return <Loader></Loader>;
+  }
   const handelUnfavourite = (id) => {
     Swal.fire({
       title: "Are you sure?",

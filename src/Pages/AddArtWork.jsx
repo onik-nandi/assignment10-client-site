@@ -2,9 +2,11 @@ import React, { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 const AddArtWork = () => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -46,7 +48,7 @@ const AddArtWork = () => {
             icon: "success",
             draggable: true,
           }).then(() => {
-            navigation("/my-gallery");
+            navigate("/my-gallery");
           });
           form.reset();
         }

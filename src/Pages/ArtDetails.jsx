@@ -8,6 +8,7 @@ const ArtDetails = () => {
   const [artwork, setArtWork] = useState([]);
   const [isFavourite, setIsFavourite] = useState(false);
   const { id } = useParams();
+  const {user} =useContext(AuthContext)
 
   useEffect(() => {
     fetch(`https://assignment10-backend-tau.vercel.app/artWorks/${id}`)
@@ -25,8 +26,9 @@ const ArtDetails = () => {
   }, [id]);
 
   const handelFavourite = () => {
+    const favArtWorks ={...artwork , userEmail: user?.email}
     axios
-      .post(`https://assignment10-backend-tau.vercel.app/favourites`, artwork)
+      .post(`https://assignment10-backend-tau.vercel.app/favourites`, favArtWorks)
       .then((res) => {
         const { acknowledged } = res.data;
 
