@@ -13,19 +13,18 @@ const MyGallery = () => {
     setLoading(true);
     fetch(
       `https://assignment10-backend-tau.vercel.app/my-artworks?email=${user?.email}`
-    ).then((res) =>
-      res
-        .json()
-        .then((data) => {
+    ).then(
+      (res) =>
+        res.json().then((data) => {
           setMyArts(data);
           setLoading(false);
         })
-        // .catch((err) => console.log(err))
+      // .catch((err) => console.log(err))
     );
   }, [user?.email]);
-if (loading) {
-  return <Loader></Loader>;
-}
+  if (loading) {
+    return <Loader></Loader>;
+  }
   const handelDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",

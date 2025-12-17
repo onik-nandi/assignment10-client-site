@@ -155,8 +155,8 @@ const ArtWorks = () => {
                 <div className="mt-3 flex  justify-between md:h-[60px] ">
                   <p>
                     <Fade>
-                      {art?.description?.length > 120
-                        ? art.description.slice(0, 120) + "..."
+                      {art?.description?.length > 80
+                        ? art.description.slice(0, 80) + "..."
                         : art?.description}
                     </Fade>
                   </p>

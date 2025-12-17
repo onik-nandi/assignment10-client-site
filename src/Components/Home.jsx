@@ -16,7 +16,9 @@ const Home = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`https://assignment10-backend-tau.vercel.app/recentArtworks`)
+      .get(
+        `https://assignment10-backend-tau.vercel.app/recentArtworks?visibility=Public`
+      )
       .then((res) => {
         setRecentArtWorks(res.data);
         setLoading(false);
@@ -123,11 +125,9 @@ const Home = () => {
               </div>
               <div className="mt-3 flex items-center justify-between md:h-[60px]">
                 <p>
-                  <Fade>
-                    {art?.description?.length > 120
-                      ? art.description.slice(0, 120) + "..."
-                      : art?.description}
-                  </Fade>
+                  {art?.description?.length > 80
+                    ? art.description.slice(0, 80) + "..."
+                    : art?.description}
                 </p>
               </div>
               <div className="mt-3 flex items-center justify-between ">

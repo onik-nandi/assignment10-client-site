@@ -8,7 +8,7 @@ const ArtDetails = () => {
   const [artwork, setArtWork] = useState([]);
   const [isFavourite, setIsFavourite] = useState(false);
   const { id } = useParams();
-  const {user} =useContext(AuthContext)
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     fetch(`https://assignment10-backend-tau.vercel.app/artWorks/${id}`)
@@ -16,19 +16,36 @@ const ArtDetails = () => {
       .then((data) => {
         setArtWork(data);
         // console.log(data);
-        if (data?.isFavourite) {
-          setIsFavourite(true);
-        }
       })
       .catch((err) => {
         // console.log(err);
       });
   }, [id]);
 
+  useEffect(() => {
+    if (user?.email && artwork?._id) {
+      axios
+        .get(
+          `https://assignment10-backend-tau.vercel.app/favourites/check?email=${user.email}&artId=${artwork._id}`
+        )
+        .then((res) => {
+          setIsFavourite(res.data.isFavourite);
+        });
+    }
+  }, [user?.email, artwork?._id]);
   const handelFavourite = () => {
-    const favArtWorks ={...artwork , userEmail: user?.email}
+    const { _id, ...artWorkWithoutId } = artwork;
+    const favArtWorks = {
+      ...artWorkWithoutId,
+      userEmail: user?.email,
+      artId: artwork._id,
+    };
+    // console.log(favArtWorks)
     axios
-      .post(`https://assignment10-backend-tau.vercel.app/favourites`, favArtWorks)
+      .post(
+        `https://assignment10-backend-tau.vercel.app/favourites`,
+        favArtWorks
+      )
       .then((res) => {
         const { acknowledged } = res.data;
 
@@ -43,11 +60,6 @@ const ArtDetails = () => {
       })
       .catch((err) => {
         console.log(err);
-        Swal.fire({
-          title: "Already In Favourite List",
-          icon: "info",
-          draggable: true,
-        });
       });
   };
 
@@ -93,10 +105,12 @@ const ArtDetails = () => {
 
           <button
             onClick={handelFavourite}
-            className="btn btn-primary mt-3"
             disabled={isFavourite}
+            className={
+              isFavourite ? " btn btn-primary mt-3" : " btn btn-primary mt-3"
+            }
           >
-            {isFavourite ? "Already Favourite" : "Make Favourite"}
+            {isFavourite ? "Already in Favourites" : "Add to Favourite"}
           </button>
         </div>
       </div>
