@@ -1,16 +1,25 @@
-# React + Vite
+# ArtNest
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Live Site: [ArtNest Live](https://ass-10-fd020.web.app/)
 
-Currently, two official plugins are available:
+## Project Overview
+ArtNest is an online platform where artists can showcase their artworks, and users can explore, favourite, and learn more about creative pieces from around the world. The website is designed for both art enthusiasts and creators, offering an engaging experience with a user-friendly interface.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+- **Artwork Display:** Browse a diverse collection of artworks with detailed information including artist name, category, tools used, dimensions, and price.  
+- **Favourite System:** Users can mark artworks as favourites and maintain a personal collection for easy access.  
+- **Responsive Design:** Fully responsive layout that works seamlessly across desktop, tablet, and mobile devices.  
+- **Artist Profiles:** View artist details and explore all artworks uploaded by a particular artist.  
+- **Filter & Search:** Easily filter artworks by category, tools, or other attributes to find exactly what you are looking for.  
+- **Secure Authentication:** User registration and login system powered by Firebase to manage user accounts safely.  
 
-## React Compiler
+## Technologies Used
+- React.js for frontend
+- Tailwind CSS for styling
+- Axios for API requests
+- Firebase Authentication
+- SweetAlert2 /Toastify for notifications
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
